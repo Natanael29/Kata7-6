@@ -1,8 +1,6 @@
 package kata6.apps.swing;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.PopupMenu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -11,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import kata6.control.BlockPresenter;
 import kata6.control.Command;
 import kata6.control.DownCommand;
 import kata6.control.LeftCommand;
@@ -20,12 +19,14 @@ import kata6.model.Block;
 import kata6.view.BlockDisplay;
 
 public class Main extends JFrame {
+    private static final int BLOCK_SIZE = 100;
 
     public static void main(String[] args) {
        new Main().execute();
     }
     private BlockDisplay blockDisplay;
     private Map<String, Command> commands = new HashMap<>();
+    private BlockPresenter blockPresenter;
     
     public Main() {
         this.setTitle("Block shifter");
@@ -37,7 +38,7 @@ public class Main extends JFrame {
         this.add(toolbar(), BorderLayout.SOUTH);
         
         Block block = new Block(4, 4);
-        blockDisplay.display(block);
+        blockPresenter = new BlockPresenter(block, blockDisplay);
         commands.put("left", new LeftCommand(block));
         commands.put("right", new RightCommand(block));
         commands.put("up", new UpCommand(block));
@@ -49,7 +50,7 @@ public class Main extends JFrame {
     }
     
     private JPanel blockPanel() {
-        BlockPanel blockPanel = new BlockPanel();
+        BlockPanel blockPanel = new BlockPanel(BLOCK_SIZE, Block.MAX);
         this.blockDisplay = blockPanel;
         return blockPanel;
     } 

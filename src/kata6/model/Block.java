@@ -56,6 +56,12 @@ public class Block {
         changed();
     }
 
+    public void pos(int x, int y) {
+        this.x = x;
+        this.y = y;
+        changed();
+    }
+    
     private TimerTask task() {
         return new TimerTask() {
             @Override
@@ -76,7 +82,7 @@ public class Block {
             observer.changed();
         }
     }
-    
+
     public interface Observer {
         void changed();
     }
